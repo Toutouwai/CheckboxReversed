@@ -1,0 +1,96 @@
+<?php namespace ProcessWire;
+
+/**
+ * Checkbox Reversed
+ *
+ * @author Robin Sallis
+ *
+ * ProcessWire 3.x
+ * Copyright (C) 2011 by Ryan Cramer
+ * Licensed under GNU/GPL v2, see LICENSE.TXT
+ *
+ * http://www.processwire.com
+ * http://www.ryancramer.com
+ *
+ */
+
+class CheckboxReversed extends WireData implements Module {
+
+	/**
+	 * Module information
+	 */
+	public static function getModuleInfo() {
+		return array(
+			'title' => 'Checkbox Reversed',
+			'version' => '0.1.0',
+			'summary' => 'Modifies InputfieldCheckbox so that it shows the reverse of its true value.',
+			'author' => 'Robin Sallis',
+			'href' => 'https://github.com/Toutouwai/CheckboxReversed',
+			'icon' => 'check-square',
+			'requires' => 'ProcessWire>=3.0.44', // because of Inputfield::renderReadyHook()
+			'autoload' => 'template=admin',
+		);
+	}
+
+	/**
+	 * Ready
+	 */
+	public function ready() {
+		$this->addHookAfter('InputfieldCheckbox::getConfigInputfields', $this, 'addConfigInputfields');
+		$this->addHookAfter('InputfieldCheckbox::render', $this, 'afterRender');
+		$this->addHookAfter('InputfieldCheckbox::renderReadyHook', $this, 'afterRenderReady');
+	}
+
+	/**
+	 * Add config inputfields
+	 *
+	 * @param HookEvent $event
+	 */
+	public function addConfigInputfields(HookEvent $event) {
+		$inputfield = $event->object;
+		$field = $inputfield->hasField;
+		if(!$field) return;
+		$wrapper = $event->return;;
+
+		// Add config field
+		$f = $this->modules->InputfieldCheckbox;
+		$f_name = 'reverse_checked';
+		$f->name = $f_name;
+		$f->label = $this->_('Reverse the checked state of this inputfield?');
+		$f->notes = $this->_('If this option is selected the inputfield will be unchecked when the field value is 1 and checked when the field value is *not* 1.');
+		$f->attr('checked', $field->$f_name === 1 ? 'checked' : '');
+		$wrapper->add($f);
+	}
+
+	/**
+	 * Add reversed checkbox input
+	 *
+	 * @param HookEvent $event
+	 */
+	public function afterRender(HookEvent $event) {
+		$inputfield = $event->object;
+		$field = $inputfield->hasField;
+		if(!$field || !$field->reverse_checked) return;
+		$checked = $inputfield->value == 1 ? '' : 'checked';
+		$class = $this->user->admin_theme === 'AdminThemeUikit' ? ' uk-checkbox' : '';
+		$add = "<input type='checkbox' class='checkbox-reversed$class'$checked>";
+		$event->return = str_replace("<input type='checkbox'", "$add<input type='checkbox'", $event->return);
+	}
+
+	/**
+	 * Add JS and CSS
+	 *
+	 * @param HookEvent $event
+	 */
+	public function afterRenderReady(HookEvent $event) {
+		$inputfield = $event->object;
+		$field = $inputfield->hasField;
+		if(!$field || !$field->reverse_checked) return;
+		$config = $this->config;
+		$info = $this->getModuleInfo();
+		$version = (int) $info['version'];
+		$config->scripts->add($config->urls->$this . "{$this}.js?v=$version");
+		$config->styles->add($config->urls->$this . "{$this}.css?v=$version");
+	}
+
+}
