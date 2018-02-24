@@ -6,7 +6,7 @@ A module for ProcessWire CMS/CMF. Modifies InputfieldCheckbox so that it shows t
 
 The core FieldtypeCheckbox does not have a setting that allows a checkbox to be checked by default. One reason for this is that only a checked field saves a value to the database. An unchecked field does not save "0" to the database, but rather does not save any value for the field at all. Therefore there is no way to distinguish between a new field that has not yet been saved (and therefore could potentially get a default checked state) and a field that has deliberately been saved as unchecked.
 
-Because of this you sometimes have to use a checkbox in the opposite way than you would like. Suppose your client has requested a checkbox labelled "Bootylicious" that will be checked by default. This isn't possible with FieldtypeCheckbox so instead you have to have convince them that a checkbox labelled "Not bootylicious" that is unchecked by default is just as good. This alternative will achieve the same thing, but it's not ideal.
+Because of this you sometimes have to use a checkbox in the opposite way than you would like. Suppose your client has requested a checkbox labelled "Bootylicious" that will be checked by default. This isn't possible with FieldtypeCheckbox so instead you have to convince them that a checkbox labelled "Not bootylicious" that is unchecked by default is just as good. This alternative will achieve the same thing, but it's not ideal.
 
 ## A solution
 
