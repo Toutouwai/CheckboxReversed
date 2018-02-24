@@ -10,7 +10,7 @@ Because of this you sometimes have to use a checkbox in the opposite way than yo
 
 ## A solution
 
-This module doesn't change the limitations of the core checkbox field, but it provides a workaround that allows you to show the checkbox with the desired default state and label. So in the example above, you would still name the field "not_bootylicious" (otherwise it could get confusing in your template files) but you can label the field "Bootylicious" and the checkbox will appear checked when its true value is actually unchecked, and vice versa. This allows new pages to have the checkbox checked by default. Clear as mud? :)
+This module doesn't change the limitations of the core checkbox field, but it provides a workaround that allows you to show the checkbox with the desired default state and label. So in the example above you would still name the field "not_bootylicious" (otherwise it could get confusing in your template files) but you can label the field "Bootylicious" and the checkbox will appear checked when its true value is actually unchecked, and vice versa. This allows new pages to show the checkbox checked by default. Clear as mud? :)
 
 ## Usage
 
