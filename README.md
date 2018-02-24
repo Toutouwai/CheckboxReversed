@@ -17,3 +17,5 @@ This module doesn't change the limitations of the core checkbox field, but it pr
 [Install](http://modules.processwire.com/install-uninstall/) the Checkbox Reversed module.
 
 For any Checkbox field where you want the inputfield to show the reverse of its true value, activate the "Reverse the checked state of this inputfield?" option in the field settings.
+
+![checkbox-reversed-setting](https://user-images.githubusercontent.com/1538852/36626005-479f441a-198f-11e8-9601-72cecaea1b9f.png)
